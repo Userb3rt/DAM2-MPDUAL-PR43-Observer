@@ -10,12 +10,16 @@ public class PR450Entregues {
 
     void addProducte(PR450Producte producte) {
         productes.add(producte);
+        // aqui salta el observador para otorgarnos el mensaje que hemos agragado un
+        // producto.
         llistaObservers.firePropertyChange("entreguesAdd", null, producte.getId());
     }
 
     void removeProducte(int id) {
         for (int i = 0; i < productes.size(); i++) {
             if (productes.get(i).getId() == id) {
+                // aqui salta el observador para otorgarnos el mensaje que hemos borrado un
+                // producto.
                 llistaObservers.firePropertyChange("entreguesRemove", productes.get(i).getId(), false);
                 productes.remove(i);
             }
@@ -29,7 +33,7 @@ public class PR450Entregues {
     public void setProductes(ArrayList<PR450Producte> productes) {
         this.productes = productes;
     }
-
+    //Modificamos el toString para que se nos vea como en la práctica.
     @Override
     public String toString() {
         String txt = "[ ";

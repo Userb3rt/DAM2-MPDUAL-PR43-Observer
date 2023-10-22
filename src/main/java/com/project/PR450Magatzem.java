@@ -1,6 +1,5 @@
 package com.project;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -12,6 +11,9 @@ class PR450Magatzem {
 
     void addProducte(PR450Producte producte) {
         capacitat--;
+        // aqui salta el observador para otorgarnos el mensaje que hemos agreagado un
+        // producto.
+        llistaObservers.firePropertyChange("magatzemAdd", producte.getId(), capacitat);
         productes.add(producte);
     }
 
@@ -19,6 +21,8 @@ class PR450Magatzem {
         for (int i = 0; i < productes.size(); i++) {
             if (productes.get(i).getId() == id) {
                 capacitat++;
+                // aqui salta el observador para otorgarnos el mensaje que hemos borrado un
+                // producto.
                 llistaObservers.firePropertyChange("magatzemRemove", productes.get(i).getId(), capacitat);
                 productes.remove(i);
             }
@@ -45,6 +49,7 @@ class PR450Magatzem {
     public void setCapacitat(int capacitat) {
         this.capacitat = capacitat;
     }
+    // Modificamos el toString para que se nos vea como en la práctica.
 
     @Override
     public String toString() {

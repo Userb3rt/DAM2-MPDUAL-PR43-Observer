@@ -95,6 +95,8 @@ public class Main {
         p1.addPropertyChangeListener("producteName", producteName);
         magatzem.addPropertyChangeListener("magatzemAdd", magatzemAdd);
         magatzem.addPropertyChangeListener("magatzemRemove", magatzemRemove);
+        // Pordria haber imprimido el mensaje que me otorga este listener en
+        // magatzemRemove pero queria probar lo del segundo evento
         magatzem.addPropertyChangeListener("magatzemRemove", segundoevento);
         entregues.addPropertyChangeListener("entreguesAdd", entreguesAdd);
         entregues.addPropertyChangeListener("entreguesRemove", entreguesRemove);
