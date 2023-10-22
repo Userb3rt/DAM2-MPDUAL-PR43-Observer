@@ -22,7 +22,7 @@ public class Main {
         PR450Entregues entregues = new PR450Entregues();
 
         // Aquí afegir els property listeners adequats
-        PropertyChangeListener cambiid = new PropertyChangeListener() {
+        PropertyChangeListener producteId = new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
@@ -31,7 +31,7 @@ public class Main {
 
         };
 
-        PropertyChangeListener cambinom = new PropertyChangeListener() {
+        PropertyChangeListener producteName = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 System.out.printf("Producte ha canviat el nom de '%s' a '%s'\n", evt.getOldValue(), evt.getNewValue());
@@ -53,13 +53,26 @@ public class Main {
             public void propertyChange(PropertyChangeEvent evt) {
                 System.out.printf("S'ha esborrat el producte am id '%s' del magatzem, capacitat '%s'\n",
                         evt.getOldValue(), evt.getNewValue());
+                // Ahora en el iterador del for vamos a introducir en el arraylist de entregas
+                // todos los productos que vayamos a borrar, porque mienras salto el observador,
+                // tenemos la oportunidad para añadir en entregas, ya que dentro de la calse de
+                // magatzem no podriamos hacer
                 for (int i = 0; i < magatzem.getProductes().size(); i++) {
-                    if (magatzem.getProductes().get(i).getId() == (int)evt.getOldValue()) {
+                    if (magatzem.getProductes().get(i).getId() == (int) evt.getOldValue()) {
                         entregues.addProducte(magatzem.getProductes().get(i));
-                        System.out.printf("S'ha mogut el producte amb id '%s' del magatzem cap a entregues\n",evt.getOldValue());
                     }
                 }
-                
+
+            }
+        };
+        // Con este segundo evento dentro de la llista de observadores de magazem
+        // daremos enfasis que hemos movido los archivos
+        PropertyChangeListener segundoevento = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                System.out.printf("S'ha mogut el producte amb id '%s' del magatzem cap a entregues\n",
+                        evt.getOldValue());
+
             }
         };
 
@@ -77,11 +90,12 @@ public class Main {
             }
         };
 
-        p0.addPropertyChangeListener("producteId", cambiid);
-        p0.addPropertyChangeListener("producteName", cambinom);
-        p1.addPropertyChangeListener("producteName", cambinom);
+        p0.addPropertyChangeListener("producteId", producteId);
+        p0.addPropertyChangeListener("producteName", producteName);
+        p1.addPropertyChangeListener("producteName", producteName);
         magatzem.addPropertyChangeListener("magatzemAdd", magatzemAdd);
         magatzem.addPropertyChangeListener("magatzemRemove", magatzemRemove);
+        magatzem.addPropertyChangeListener("magatzemRemove", segundoevento);
         entregues.addPropertyChangeListener("entreguesAdd", entreguesAdd);
         entregues.addPropertyChangeListener("entreguesRemove", entreguesRemove);
 
