@@ -42,7 +42,7 @@ public class Main {
         PropertyChangeListener magatzemAdd = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                System.out.printf("S'ha afegit el producte am id '%s' al magatzem, capacitat '%s'\n", evt.getOldValue(),
+                System.out.printf("S'ha afegit el producte amb id '%s' al magatzem, capacitat '%s'\n", evt.getOldValue(),
                         evt.getNewValue());
 
             }
